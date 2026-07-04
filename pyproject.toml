@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brainforge"
+version = "0.1.0"
+description = "Cognitive infrastructure for engineering expertise."
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+include = ["brainforge*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

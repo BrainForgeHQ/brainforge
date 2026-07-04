@@ -3,21 +3,20 @@ from datetime import UTC, datetime
 from typing import Dict, List
 from uuid import UUID, uuid4
 
-from brainforge.domain.evidence import Evidence
-
 
 @dataclass
-class KnowledgeUnit:
+class Evidence:
     """
-    Smallest independent unit of expertise inside BrainForge.
+    A source-backed piece of information that supports one or more Knowledge Units.
     """
 
     id: UUID = field(default_factory=uuid4)
-    title: str = ""
-    statement: str = ""
-    evidence: List[Evidence] = field(default_factory=list)
+    source_type: str = ""
+    source_title: str = ""
+    source_url: str = ""
+    content: str = ""
+    author: str = ""
+    published_at: str = ""
     tags: List[str] = field(default_factory=list)
-    relationships: List[UUID] = field(default_factory=list)
     metadata: Dict[str, str] = field(default_factory=dict)
-    confidence: float = 1.0
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
