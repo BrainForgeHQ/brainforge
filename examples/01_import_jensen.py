@@ -1,9 +1,10 @@
 from brainforge.domain.brain import Brain
-from brainforge.domain.knowledge_unit import KnowledgeUnit
+from brainforge.builders.knowledge_builder import KnowledgeBuilder
 from brainforge.pipelines.transcript_pipeline import TranscriptForge
 
 
 def main():
+
     brain = Brain(
         name="Jensen Huang",
         description="Knowledge Brain for NVIDIA CEO Jensen Huang.",
@@ -11,28 +12,29 @@ def main():
     )
 
     forge = TranscriptForge()
+    builder = KnowledgeBuilder()
 
-    evidence = forge.forge(
+    evidence_list = forge.forge(
         "brains/jensen/assets/jensen_intro.md"
     )
 
-    ku = KnowledgeUnit(
-        title="AI transforms industries",
-        statement="Artificial Intelligence will transform every industry.",
-        evidence=[evidence],
-        confidence=0.95,
-    )
+    for evidence in evidence_list:
 
-    brain.add_knowledge_unit(ku)
+        ku = builder.build(evidence)
+
+        brain.add_knowledge_unit(ku)
 
     print("===================================")
-    print(" BrainForge Example")
+    print(" BrainForge")
     print("===================================")
     print(f"Brain: {brain.name}")
     print(f"Knowledge Units: {len(brain.knowledge_units)}")
-    print(f"First KU: {brain.knowledge_units[0].title}")
-    print(f"Evidence Type: {brain.knowledge_units[0].evidence[0].source_type}")
-    print(f"Evidence Title: {brain.knowledge_units[0].evidence[0].source_title}")
+    print()
+
+    for ku in brain.knowledge_units:
+
+        print(f"- {ku.title}")
+
     print("===================================")
 
 
